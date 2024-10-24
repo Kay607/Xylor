@@ -1,10 +1,8 @@
 #include <iostream>
 
-using namespace std;
-
 int main()
 {
-    cout << "Hello, World!" << endl;
-    cin.get();
+    std::cout << "Hello, World!" << std::endl;
+    std::cin.get();
     return 0;
 }
