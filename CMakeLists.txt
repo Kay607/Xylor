@@ -13,24 +13,26 @@ if (MSVC)
     add_compile_options(/W4 /WX) # Enable warning level 4 and treat warnings as errors
 endif()
 
-# Automatically find all .cpp and .h files in the src directory
-file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.h")
+# Find all source and header files in src/
+file(GLOB_RECURSE XYLOR_SOURCES "src/*.cpp" "src/*.h")
 
-# Add the executable
-add_executable(${PROJECT_NAME} ${SOURCES})
+# Define the main executable (Xylor)
+add_executable(${PROJECT_NAME} ${XYLOR_SOURCES})
 
-# Set output directory
+# Set output directory for the executable
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
 
+# Custom build message for Xylor
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E echo "Xylor build complete"
 )
 
+# Enable testing
+enable_testing()
 
-
-# Add googletest
+# Add GoogleTest
 include(FetchContent)
 FetchContent_Declare(
     googletest
@@ -42,18 +44,18 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-
-enable_testing()
-
+# Find all test source files in tests/
 file(GLOB_RECURSE TEST_SOURCES "tests/*.cpp")
-add_executable(
-  testing
-  ${TEST_SOURCES}
-)
-target_link_libraries(
-    testing
-  GTest::gtest_main
-)
 
+# Define the test executable
+add_executable(testing ${TEST_SOURCES} ${XYLOR_SOURCES}) # Link Xylor sources to testing
+target_compile_definitions(testing PRIVATE XY_TESTING)
+
+target_include_directories(testing PRIVATE "${PROJECT_SOURCE_DIR}/src")
+
+# Link GoogleTest to the testing executable
+target_link_libraries(testing PRIVATE GTest::gtest_main)
+
+# Register tests with CTest
 include(GoogleTest)
 gtest_discover_tests(testing)
