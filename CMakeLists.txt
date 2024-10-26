@@ -17,10 +17,7 @@ endif ()
 file(GLOB_RECURSE XYLOR_SOURCES "src/*.cpp" "src/*.h")
 
 # Define the main executable (Xylor)
-add_executable(${PROJECT_NAME} ${XYLOR_SOURCES}
-        src/Enums/TokenType.h
-        src/Classes/Tokens/Token.cpp
-        src/Classes/Tokens/Token.h)
+add_executable(${PROJECT_NAME} ${XYLOR_SOURCES})
 
 # Set output directory for the executable
 set_target_properties(${PROJECT_NAME} PROPERTIES
