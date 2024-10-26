@@ -4,7 +4,7 @@
 #include <cstring>
 #include <vector>
 
-#include "Enums/TokenType.h"
+#include "Classes/Tokens/Token.h"
 
 std::vector<std::string> split_sentence(std::string sen)
 {
@@ -26,33 +26,6 @@ std::vector<std::string> split_sentence(std::string sen)
 
     return words;
 }
-
-class Token
-{
-public:
-    std::string tokenIdentifier;
-    TokenType tokenType;
-
-
-    static Token GenerateToken(std::string keyword)
-    {
-        Token token;
-
-        token.tokenIdentifier = keyword;
-
-        TokenType type;
-
-        switch (keyword)
-        {
-        case "int":
-            type = TokenType::Type;
-        }
-
-        token.tokenType = type;
-
-        return token;
-    }
-};
 
 void skipBOM(std::istream& in)
 {
@@ -79,16 +52,22 @@ int main()
     std::string lines;
     std::vector<std::string> line;
 
-    std::vector<Token> tokens;
+    std::vector<Token> tokenStream;
 
     while (std::getline(code, lines))
         line.push_back(lines);
 
-    auto words = split_sentence(line[0]);
+    auto words = split_sentence(line[3]);
 
+
+    int i = 0;
+
+    tokenStream.reserve(words.size());
     for (const auto& word : words)
     {
-        std::cout << word << std::endl;
+        tokenStream.push_back(Token::GenerateToken(tokenStream, word));
+        std::cout << std::string(tokenStream[i]) << std::endl;
+        i++;
     }
 
     return 0;

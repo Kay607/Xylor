@@ -6,5 +6,5 @@ enum class TokenType
     Identifier,
     Operator,
     Value,
-    SemiColon
+    SemiColon,
 };
