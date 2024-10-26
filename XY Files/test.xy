@@ -1,0 +1,14 @@
+﻿int x = 50;
+
+void main() => {
+    y = add pass (add pass 5 and 6);
+    display pass y;
+}
+
+int add(int i) => {
+    disclose (x + i);
+}
+
+int add(int i, int j) => {
+    disclose (x + i);
+}
