@@ -12,3 +12,13 @@ int add(int i) => {
 int add(int i, int j) => {
     disclose (x + i);
 }
+
+int
+string
+float
+double
+long
+char
+boolean
+[]
+<>
